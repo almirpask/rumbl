@@ -1,6 +1,6 @@
 <h2>New User</h2>
 <%= form_for @changeset, user_path(@conn, :create), fn f -> %> 
-
+    
     <%= if @changeset.action do %> 
         <div class="alert alert-danger">
             <p>Oops, something went wrong! Please check the errors below.</p>
@@ -22,6 +22,25 @@
             </div>           
         </div>
     </div>
+
+    <%= inputs_for f, :credential, fn cf -> %>
+         <div class="row">
+            <div class="form-group"> 
+                <div>
+                    <%= text_input cf, :email, placeholder: "Email", class: 'form-control' %> 
+                    <%= error_tag cf, :email %>
+                </div>           
+            </div>
+        </div>
+         <div class="row">
+            <div class="form-group"> 
+                <div>
+                    <%= password_input cf, :password, placeholder: "Password", class: 'form-control' %> 
+                    <%= error_tag cf, :password %>
+                </div>           
+            </div>
+        </div>
+    <% end %>
     <div class="row">
         <%= submit "Create User", class: 'btn btn-primary center-block' %> 
     </div>
