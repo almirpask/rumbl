@@ -23,7 +23,7 @@ defmodule RumblWeb.UserController do
             {:ok, user} ->
                 conn
                 |> put_flash(:info, "#{user.name} created!")
-                |> redirect(to: Routes.user_path(conn, :index))
+                |> redirect(to: user_path(conn, :index))
             {:error, %Ecto.Changeset{} = changeset} ->
                 render(conn, "new.html", changeset: changeset)
         end
