@@ -8,25 +8,47 @@
     <meta name="author" content="">
 
     <title>Hello Rumbl!</title>
+
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
+    <header>
+      <nav role="navigation" class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">           
+            <img src="https://phoenixframework.org/assets/img/phoenix.png" alt="Phoenix Framework Logo"/ height="50" class="phoenix_logo">
+          </div>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <%= if @current_user do %>
+            <li>
+              <a href="#"><%= @current_user.username %></a>
+            </li> 
+            <li>
+              <%= link "Log out",
+                to: session_path(@conn, :delete, @current_user), method: "delete" 
+              %>
+            </li>
+          <% else %>
+            <li>
+              <%= link "Register", to: user_path(@conn, :new) %>
+            </li> 
+            <li>
+              <%= link "Log in", to: session_path(@conn, :new) %>
+            </li>
+          <% end %> 
+        </ul>
+      </nav>  
+    </header>
     <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
-        </nav>
-        <span class="logo"></span>
-      </header>
-
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-
-      <main role="main" class="container">
-        <%= render @view_module, @view_template, assigns %>
+    
+      <main role="main">
+        <section class="container">
+          <%= render @view_module, @view_template, assigns %>
+        </section>
       </main>
 
     </div> <!-- /container -->
